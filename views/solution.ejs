@@ -1,0 +1,207 @@
+	<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>High-Speed FTP Solution</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/1037/1037316.png" type="image/png">
+    <style>
+    /* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header Section */
+.header-section {
+    text-align: center;
+    padding: 50px 20px;
+    background-color: #3498db;
+    color: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    margin-bottom: 50px;
+    animation: fadeIn 2s ease;
+}
+
+.main-heading {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.intro {
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+.cta-btn {
+    background-color: white;
+    color: #3498db;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.cta-btn:hover {
+    background-color: #2980b9;
+    color: white;
+}
+
+/* Features Section */
+.features-section {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.section-heading {
+    font-size: 28px;
+    margin-bottom: 30px;
+    color: #2c3e50;
+}
+
+.feature-card {
+    background-color: white;
+    padding: 15px;
+    margin: 20px;
+    display: inline-block;
+    width: 250px;
+    height: 200px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+h3 {
+    color: #3498db;
+    margin-bottom: 10px;
+}
+
+/* Process Section */
+.process-section {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.step {
+    background-color: white;
+    padding: 20px;
+    margin: 20px;
+    display: inline-block;
+    width: 300px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    animation: fadeInUp 1s ease;
+}
+
+.step h4 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #3498db;
+    color: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    margin-top: 50px;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+    
+    </style>
+</head>
+<body>
+    <div class="container">
+        <section class="header-section">
+            <h1 class="main-heading animate-header">High-Speed File Transfer with FTP</h1>
+            <p class="intro animate-intro">Experience fast, secure, and reliable file transfers with our FTP solution, optimized for efficiency and performance.</p>
+            <a href="#features" class="cta-btn animate-btn">Learn More</a>
+        </section>
+
+        <section class="features-section" id="features">
+            <h2 class="section-heading">Why Choose FTP for File Transfers?</h2>
+            <div class="feature-card animate-card">
+                <h3>High-Speed Transfers</h3>
+                <p>Our FTP servers are optimized for speed, ensuring that large files are transferred quickly with minimal downtime.</p>
+            </div>
+            <div class="feature-card animate-card">
+                <h3>Reliability</h3>
+                <p>FTP supports resuming interrupted transfers, ensuring files are never lost or corrupted during the process.</p>
+            </div>
+            <div class="feature-card animate-card">
+                <h3>Security</h3>
+                <p>Our FTP solution uses FTPS to encrypt your data, safeguarding your sensitive information during transfers.</p>
+            </div>
+            <div class="feature-card animate-card">
+                <h3>Versatility</h3>
+                <p>FTP is compatible with a variety of operating systems and file types, making it a flexible solution for any file transfer need.</p>
+            </div>
+        </section>
+
+        <section class="process-section">
+            <h2 class="section-heading">How It Works</h2>
+            <div class="step animate-step">
+                <h4>1. Account Setup</h4>
+                <p>Register an account and receive your FTP credentials to access our file transfer system.</p>
+            </div>
+            <div class="step animate-step">
+                <h4>2. Connect to FTP</h4>
+                <p>Use any FTP client or our web interface to log in securely and start uploading or downloading files.</p>
+            </div>
+            <div class="step animate-step">
+                <h4>3. Upload or Download Files</h4>
+                <p>Drag and drop your files into the FTP client and let our system handle the rest.</p>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>&copy; 2024 X Transfer Solutions. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>
+	

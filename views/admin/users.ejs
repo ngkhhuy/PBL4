@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Users</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f2f5;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #1a237e;
+            margin-bottom: 30px;
+            font-size: 2.2em;
+            font-weight: 600;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 15px;
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 25px;
+            color: #2962ff;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+        .back-link:hover {
+            background: #2962ff;
+            color: white;
+            transform: translateX(-5px);
+        }
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 20px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #eef2f7;
+        }
+        th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: #1a237e;
+            text-transform: uppercase;
+            font-size: 0.9em;
+            letter-spacing: 0.5px;
+        }
+        tr:hover {
+            background-color: #f8f9fa;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        .action-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-right: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .edit-btn {
+            background-color: #ffb74d;
+            color: #000;
+        }
+        .edit-btn:hover {
+            background-color: #ffa726;
+            transform: translateY(-2px);
+        }
+        
+        .save-btn {
+            background-color: #4caf50;
+            color: white;
+        }
+        .save-btn:hover {
+            background-color: #43a047;
+            transform: translateY(-2px);
+        }
+        
+        .cancel-btn {
+            background-color: #ef5350;
+            color: white;
+        }
+        .cancel-btn:hover {
+            background-color: #e53935;
+            transform: translateY(-2px);
+        }
+
+        .toggle-btn {
+            background-color: #26c6da;
+            color: white;
+        }
+        .toggle-btn:hover {
+            background-color: #00acc1;
+            transform: translateY(-2px);
+        }
+
+        .editable {
+            padding: 8px 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 14px;
+            width: 90%;
+            transition: border-color 0.3s ease;
+        }
+        .editable:focus {
+            border-color: #2962ff;
+            outline: none;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .status-value {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        
+        [style*="color: #28a745"] {
+            background-color: #e8f5e9;
+            color: #2e7d32 !important;
+        }
+        
+        [style*="color: #dc3545"] {
+            background-color: #ffebee;
+            color: #c62828 !important;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                padding: 15px;
+            }
+            table {
+                display: block;
+                overflow-x: auto;
+            }
+            .action-btn {
+                padding: 6px 12px;
+                margin-bottom: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/admin" class="back-link">← Back to Dashboard</a>
+        <h1>Manage Users</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% users.forEach(user => { %>
+                    <tr data-user-id="<%= user.id %>">
+                        <td><%= user.id %></td>
+                        <td>
+                            <span class="display-value"><%= user.username %></span>
+                            <input type="text" class="editable hidden" value="<%= user.username %>">
+                        </td>
+                        <td>
+                            <span class="display-value"><%= user.email %></span>
+                            <input type="email" class="editable hidden" value="<%= user.email %>">
+                        </td>
+                        <td>
+                            <span class="display-value"><%= user.role %></span>
+                            <select class="editable hidden">
+                                <option value="user" <%= user.role === 'user' ? 'selected' : '' %>>User</option>
+                                <option value="admin" <%= user.role === 'admin' ? 'selected' : '' %>>Admin</option>
+                            </select>
+                        </td>
+                        <td>
+                            <% if (parseInt(user.locked) === 0) { %>
+                                <span class="status-value" style="color: #28a745;">Online</span>
+                            <% } else { %>
+                                <span class="status-value" style="color: #dc3545;">Locked</span>
+                            <% } %>
+                        </td>
+                        <td>
+                            <button class="action-btn edit-btn" onclick="toggleEdit(this)">Edit</button>
+                            <button class="action-btn save-btn hidden" onclick="saveChanges(this)">Save</button>
+                            <button class="action-btn cancel-btn hidden" onclick="cancelEdit(this)">Cancel</button>
+                            <button class="action-btn toggle-btn" onclick="toggleLock('<%= user.id %>')">
+                                <%= parseInt(user.locked) === 0 ? 'Lock' : 'Unlock' %>
+                            </button>
+                        </td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function toggleEdit(btn) {
+            const row = btn.closest('tr');
+            row.querySelectorAll('.display-value').forEach(el => el.classList.add('hidden'));
+            row.querySelectorAll('.editable').forEach(el => el.classList.remove('hidden'));
+            row.querySelector('.edit-btn').classList.add('hidden');
+            row.querySelector('.save-btn').classList.remove('hidden');
+            row.querySelector('.cancel-btn').classList.remove('hidden');
+        }
+
+        function cancelEdit(btn) {
+            const row = btn.closest('tr');
+            row.querySelectorAll('.display-value').forEach(el => el.classList.remove('hidden'));
+            row.querySelectorAll('.editable').forEach(el => el.classList.add('hidden'));
+            row.querySelector('.edit-btn').classList.remove('hidden');
+            row.querySelector('.save-btn').classList.add('hidden');
+            row.querySelector('.cancel-btn').classList.add('hidden');
+        }
+
+        async function saveChanges(btn) {
+            const row = btn.closest('tr');
+            const userId = row.dataset.userId;
+            const username = row.querySelector('input[type="text"]').value;
+            const email = row.querySelector('input[type="email"]').value;
+            const role = row.querySelector('select').value;
+
+            try {
+                const response = await fetch(`/admin/users/${userId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ username, email, role })
+                });
+
+                if (response.ok) {
+                    // Update display values
+                    row.querySelectorAll('.display-value')[0].textContent = username;
+                    row.querySelectorAll('.display-value')[1].textContent = email;
+                    row.querySelectorAll('.display-value')[2].textContent = role;
+                    cancelEdit(btn);
+                } else {
+                    alert('Failed to update user');
+                }
+            } catch (error) {
+                console.error('Error updating user:', error);
+                alert('Error updating user');
+            }
+        }
+
+        async function toggleLock(userId, currentStatus) {
+            try {
+                const response = await fetch(`/admin/users/${userId}/toggle-lock`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+
+                if (response.ok) {
+                    location.reload(); // Refresh to show updated status
+                } else {
+                    alert('Failed to toggle lock status');
+                }
+            } catch (error) {
+                console.error('Error toggling lock status:', error);
+                alert('Error toggling lock status');
+            }
+        }
+    </script>
+</body>
+</html> 

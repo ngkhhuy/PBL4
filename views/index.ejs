@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Transfer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/1037/1037316.png" type="image/png">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            overflow-x: hidden; 
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            max-width: 100%;
+            width: 100%;
+        }
+
+        .header img {
+            height: 40px;
+        }
+
+        .header nav {
+            display: flex;
+            gap: 15px;
+        }
+
+        .header nav a {
+            text-decoration: none;
+            color: #000;
+            font-size: 16px;
+        }
+
+        .header .auth-buttons {
+            position: relative; /* Để có thể sử dụng absolute cho dropdown */
+            margin-left: -10px;
+        }
+
+        .header .auth-buttons a {
+            padding: 8px 20px;
+            border: 1px solid #007bff;
+            border-radius: 50px;
+            color: #007bff;
+            text-decoration: none;
+            margin-left: 30px;
+            display: inline-block;
+        }
+
+        .header .auth-buttons a:first-child {
+            background-color: #007bff;
+            color: white;
+        }
+
+        /* Dropdown menu */
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0);
+            min-width: 200px;
+            z-index: 1;
+            border-radius: 5px;
+        }
+
+        .dropdown-menu a {
+            padding: 12px 18px;
+            text-decoration: none;
+            display: block;
+            color: #007bff;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .auth-buttons:hover .dropdown-menu {
+            display: block;
+        }
+
+        .main-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            max-width: 7000px;
+            margin-top: 30px;
+        }
+
+        .side-image {
+            width: 20%;
+            text-align: center;
+        }
+
+        .side-image img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .container_form {
+            flex-grow: 1;
+            max-width: 60%;
+            margin: 0 20px;
+            padding: 40px;
+            background-color: white;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 9px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: lammo 1s ease-in-out;
+        }
+
+        .container_form h1 {
+            font-size: 50px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .container_form p {
+            color: #666;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .transfer-options {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+
+        .transfer-options .option {
+            padding: 10px 20px;
+            border-bottom: 2px solid transparent;
+            cursor: pointer;
+            color: #007bff;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            transition: border-color 0.3s;
+        }
+
+        .transfer-options .option.active {
+            border-bottom: 2px solid #007bff;
+        }
+
+        form.active {
+            display: flex;
+            flex-direction: column;
+            gap: 25px; /* Tăng khoảng cách giữa các phần tử trong form */
+        }
+
+        form input, form textarea, form button {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        form textarea {
+            height: 100px;
+            resize: none;
+        }
+
+        form button {
+            background-color: #007bff;
+            color: rgb(255, 255, 255);
+            border: none;
+            padding: 8px 15px;
+            font-size: 14px;
+            width: auto;
+            min-width: 120px;
+            align-items: center;
+            cursor: pointer;
+            margin: 0 auto; 
+            display: block; 
+        }
+
+        .icon {
+            margin-right: 8px;
+        }
+
+        @keyframes lammo {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <img src="https://cdn-icons-png.flaticon.com/512/1037/1037316.png" alt="FileTransfer Logo">
+        <nav>
+            <a href="/infor">Solutions</a>
+            <a href="/feature">Features</a>
+            <a href="/sent-files">File manager</a>
+            <a href="/help">Help</a>
+        </nav>
+        <div class="auth-buttons">
+            <a href="#">More Options</a> <!-- Thay nút Download bằng nút này -->
+            <div class="dropdown-menu">
+                <a href="/download">Download</a>
+                <a href="/logout">Logout</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="container_img" style="display: flex;justify-content: flex-end;">
+            <img src="https://www.filemail.com/images/homepage/send-large-files.svg" alt="">
+        </div>
+
+        <div class="container_form">
+            <h1>Send Large Files Free - Fast Secure File Transfer</h1>
+            <p>Share large files free using FTP Protocol </p>
+
+            <div class="transfer-options">
+                <div class="option active" id="email-option" onclick="switchForm('email')">
+                    <span class="icon">📧</span> Enter information here
+                </div>
+            </div>
+
+            <!-- Email Form -->
+            <form id="email-form" action="/files/upload" method="POST" enctype="multipart/form-data">
+                <input type="email" name="to" placeholder="To (email)" required>
+                <input type="email" name="from" placeholder="From (email)" required>
+                <input type="text" name="subject" placeholder="Subject">
+                
+                <input type="file" name="file" required>
+                <button type="submit">Send Email</button>
+            </form>
+        </div>
+
+        <div class="container_img">
+            <img src="https://www.filemail.com/images/homepage/send-big-files.svg" alt="">
+        </div>
+    </div>
+</body>
+</html>

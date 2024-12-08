@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Features | FTP File Transfer</title>
+    <link rel="stylesheet" href="features-style.css">
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/1037/1037316.png" type="image/png">
+    <style>
+    /* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-image: url(" https://getsynccom.wpenginepowered.com/wp-content/uploads/2024/03/Shutterstock_1901165272-1536x758.jpg");
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
+}
+
+.features-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    padding: 50px 20px;
+}
+
+.features-heading {
+    font-size: 36px;
+    color: #3498db;
+    margin-bottom: 10px;
+}
+
+.intro-text {
+    font-size: 18px;
+    color: #3498db;
+}
+
+/* Features Section */
+.features-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 50px 0;
+}
+
+.feature-box {
+    background-color: white;
+    width: 300px;
+    margin: 20px;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    animation: slideUp 1s ease forwards;
+    opacity: 0;
+}
+
+.feature-box h2 {
+    color: #3498db;
+    margin-bottom: 20px;
+}
+
+.feature-box p {
+    color: #7f8c8d;
+}
+
+/* Hover Effects */
+.feature-box:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Footer */
+.features-footer {
+    text-align: center;
+    padding: 30px;
+    background-color: #3498db;
+    color: white;
+    border-radius: 10px;
+}
+
+/* Animations */
+@keyframes slideUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Animation Delays */
+.feature-box:nth-child(1) {
+    animation-delay: 0.3s;
+}
+.feature-box:nth-child(2) {
+    animation-delay: 0.5s;
+}
+.feature-box:nth-child(3) {
+    animation-delay: 0.7s;
+}
+.feature-box:nth-child(4) {
+    animation-delay: 0.9s;
+}
+.feature-box:nth-child(5) {
+    animation-delay: 1.1s;
+}
+.feature-box:nth-child(6) {
+    animation-delay: 1.3s;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .features-section {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .feature-box {
+        width: 80%;
+    }
+}
+    
+    </style>
+</head>
+<body>
+    <div class="features-container">
+        <header>
+            <h1 class="features-heading">Website Features</h1>
+            <p class="intro-text">Explore the advanced features of our file transfer platform using FTP technology.</p>
+        </header>
+
+        <section class="features-section">
+            <div class="feature-box animate-feature">
+                <h2>High-Speed File Transfers</h2>
+                <p>Our FTP server is optimized for high-speed transfers, enabling quick file uploads and downloads, even for large files.</p>
+            </div>
+
+            <div class="feature-box animate-feature">
+                <h2>Reliable Data Transfer</h2>
+                <p>Our FTP solution ensures reliable file transfers, allowing interrupted transfers to resume and ensuring data integrity.</p>
+            </div>
+
+            <div class="feature-box animate-feature">
+                <h2>Secure with FTPS Encryption</h2>
+                <p>Your data is encrypted during transfer using FTPS, ensuring all file transmissions are secure from unauthorized access.</p>
+            </div>
+
+            <div class="feature-box animate-feature">
+                <h2>Cross-Platform Compatibility</h2>
+                <p>Our FTP system works seamlessly on Windows, macOS, and Linux, supporting various FTP clients for ease of use.</p>
+            </div>
+
+            <div class="feature-box animate-feature">
+                <h2>Multi-User Support</h2>
+                <p>Collaborate with your team in real-time. Our FTP system supports multiple users and simultaneous file transfers.</p>
+            </div>
+
+            <div class="feature-box animate-feature">
+                <h2>File Integrity Check</h2>
+                <p>We use automated file integrity checks to ensure that your files are accurately transferred without any data loss.</p>
+            </div>
+        </section>
+
+        <footer class="features-footer">
+            <p>&copy; 2024 X Transfer Solutions. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>
+	

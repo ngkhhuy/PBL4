@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/1037/1037316.png" type="image/png">
+  <title>Files You Have Sent</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f7fc;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      text-align: center;
+      color: #21b0da;
+      margin-top: 20px;
+    }
+
+    .container {
+      width: 80%;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: rgb(93, 184, 245);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      background-color: #f9f9f9;
+      margin: 10px 0;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(12, 0, 0, 0.911);
+      transition: transform 0.5s, box-shadow 0.5s;
+    }
+
+    li:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    strong {
+      color: #000000;
+    }
+
+    .file-info {
+      margin-bottom: 10px;
+    }
+
+    .file-info span {
+      display: inline-block;
+      margin-right: 10px;
+      color: #666;
+    }
+
+    .no-files {
+      text-align: center;
+      font-size: 18px;
+      color: #888;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 8px 20px;
+      margin-top: 20px;
+      background-color: #044a5f;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+      text-align: center;
+      transition: background-color 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #21b0da;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Files You Have Sent</h1>
+
+  <div class="container">
+    <% if (files.length > 0) { %>
+      <ul>
+        <% files.forEach(function(file) { %>
+          <li>
+            <div class="file-info">
+              <strong>File Name:</strong> <%= file.name %>
+            </div>
+            <div class="file-info">
+              <strong>File Path:</strong> <%= file.path %>
+            </div>
+            <div class="file-info">
+              <strong>Uploaded On:</strong> <%= file.created_at %>
+            </div>
+            <div class="file-info">
+              <strong>Received By:</strong> <%= file.received_by %>
+            </div>
+            <hr>
+          </li>
+        <% }); %>
+      </ul>
+    <% } else { %>
+      <p class="no-files">No files sent yet.</p>
+    <% } %>
+
+    <a href="/upload" class="btn">Back to Home</a>
+  </div>
+
+  <script>
+    // Optionally, you can add interactivity using JavaScript here
+    document.querySelectorAll('li').forEach(item => {
+      item.addEventListener('click', function() {
+        alert("You clicked on file: " + item.querySelector('strong').innerText);
+      });
+    });
+  </script>
+
+</body>
+</html>
