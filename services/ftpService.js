@@ -3,10 +3,10 @@ const ftp = require("basic-ftp");
 class FTPService {
     constructor() {
         this.config = {
-            host: "192.168.101.237",
-            user: "Server",
-            password: "123456",
-            secure: false // set to true if using FTPS
+            host: process.env.FTP_HOST,
+            user: process.env.FTP_USER,
+            password: process.env.FTP_PASSWORD,
+            secure: false 
         };
     }
 

@@ -1,9 +1,6 @@
 module.exports = {
-    service: 'gmail',
     auth: {
-        user: 'noreply.filetranser@gmail.com',
-        pass: 'xkzi zmdb pqxq rrki'
-    },
-    defaultFrom: 'noreply.filetranser@gmail.com',
-    adminEmail: 'khanhhuychc@gmail.com'
-}; 
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+    }
+};

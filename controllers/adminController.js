@@ -61,7 +61,7 @@ class AdminController {
     // Cập nhật user
     async updateUser(req, res) {
         try {
-            const { username, email, role } = req.body;
+            const { email, role } = req.body;
             const userId = req.params.id;
 
             // Check if user exists
@@ -76,8 +76,8 @@ class AdminController {
 
             // Update user
             await connection.promise().execute(
-                "UPDATE users SET username = ?, email = ?, role = ? WHERE id = ?",
-                [username, email, role, userId]
+                "UPDATE users SET email = ?, role = ? WHERE id = ?",
+                [email, role, userId]
             );
 
             res.json({ message: 'User updated successfully' });
@@ -87,39 +87,6 @@ class AdminController {
                 return res.status(400).json({ message: 'Username or email already exists' });
             }
             res.status(500).json({ message: 'Error updating user' });
-        }
-    }
-
-    // Xóa user
-    async deleteUser(req, res) {
-        try {
-            const userId = req.params.id;
-
-            // Check if user exists
-            const [users] = await connection.promise().execute(
-                "SELECT * FROM users WHERE id = ?",
-                [userId]
-            );
-
-            if (users.length === 0) {
-                return res.status(404).json({ message: 'User not found' });
-            }
-
-            // Prevent self-deletion
-            if (users[0].id === req.session.userId) {
-                return res.status(400).json({ message: 'Cannot delete your own account' });
-            }
-
-            // Delete user
-            await connection.promise().execute(
-                "DELETE FROM users WHERE id = ?",
-                [userId]
-            );
-
-            res.json({ message: 'User deleted successfully' });
-        } catch (error) {
-            console.error('Error deleting user:', error);
-            res.status(500).json({ message: 'Error deleting user' });
         }
     }
 
