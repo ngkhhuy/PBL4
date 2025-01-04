@@ -4,20 +4,17 @@ const authController = require('../controllers/authController');
 const { requireAdmin } = require('../middleware/auth');
 const connection = require('../config/database');
 
-// Admin login page
 router.get('/login', (req, res) => {
     res.render('admin/login', { error: null });
 });
 
-// Admin login action
 router.post('/login', authController.adminLogin);
 
-// Admin dashboard (protected)
 router.get('/', requireAdmin, (req, res) => {
     res.render('admin/dashboard');
 });
 
-// Users management
+// Quản lý người dùng
 router.get('/users', requireAdmin, async (req, res) => {
     try {
         const [users] = await connection.promise().execute(
@@ -31,18 +28,18 @@ router.get('/users', requireAdmin, async (req, res) => {
     }
 });
 
-// Update user information
+
 router.put('/users/:id', async (req, res) => {
     try {
         const userId = req.params.id;
         const { email, role } = req.body;
 
-        // Validate inputs
+        
         if (!email || !role) {
             return res.status(400).json({ error: 'Email and role are required' });
         }
 
-        // Update user in database
+        
         await connection.promise().execute(
             'UPDATE users SET email = ?, role = ? WHERE id = ?',
             [email, role, userId]
@@ -55,12 +52,12 @@ router.put('/users/:id', async (req, res) => {
     }
 });
 
-// Toggle user lock status
+
 router.post('/users/:id/toggle-lock', requireAdmin, async (req, res) => {
     try {
         const { id } = req.params;
         
-        // First get current lock status
+        
         const [rows] = await connection.promise().execute(
             'SELECT locked FROM users WHERE id = ?',
             [id]
@@ -84,7 +81,7 @@ router.post('/users/:id/toggle-lock', requireAdmin, async (req, res) => {
     }
 });
 
-// Files management
+
 router.get('/files', requireAdmin, async (req, res) => {
     try {
         const [files] = await connection.promise().execute(`
@@ -106,7 +103,7 @@ router.get('/files', requireAdmin, async (req, res) => {
     }
 });
 
-// Delete file
+
 router.delete('/files/:id', requireAdmin, async (req, res) => {
     try {
         const { id } = req.params;

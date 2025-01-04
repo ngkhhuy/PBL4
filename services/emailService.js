@@ -22,7 +22,7 @@ const sendMail = async (to, from, subject, text, attachments = null) => {
     };
 
     try {
-        await transporter.verify(); // Verify connection configuration
+        await transporter.verify(); 
         const info = await transporter.sendMail(mailOptions);
         console.log('Email sent successfully:', info.messageId);
         return true;

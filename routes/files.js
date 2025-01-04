@@ -6,13 +6,13 @@ const fileController = require('../controllers/fileController');
 const { requireLogin } = require('../middleware/auth');
 const connection = require('../config/database');
 
-// Configure multer for file upload
+// xác định multer cho các tệp tải lên
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'D:/FTP/'); // Match your database path
+        cb(null, 'D:/FTP/'); 
     },
     filename: function (req, file, cb) {
-        cb(null, file.originalname); // Keep original filename
+        cb(null, file.originalname); 
     }
 });
 
@@ -23,10 +23,10 @@ router.get('/download', requireLogin, fileController.showDownloadPage);
 router.get('/download/:fileId', requireLogin, fileController.downloadFile);
 router.post('/upload', requireLogin, upload.single('file'), fileController.uploadFile);
 
-// Add this route to handle admin downloads
+// Kiểm soát admin dashboard
 router.get('/download/:id', async (req, res) => {
     try {
-        // First get the file info from database
+    
         const [files] = await connection.promise().execute(
             'SELECT * FROM files WHERE id = ?',
             [req.params.id]
@@ -38,14 +38,14 @@ router.get('/download/:id', async (req, res) => {
 
         const file = files[0];
         
-        // Check if user is admin based on session role
+        
         const isAdmin = req.session.role === 'admin';
         
-        // Check if user is admin or the file owner
+        
         if (isAdmin || req.session.username === file.uploaded_by) {
             const filePath = path.join(__dirname, '../uploads', file.name);
             
-            // Check if file exists
+        
             const fs = require('fs');
             if (!fs.existsSync(filePath)) {
                 console.error('File not found on disk:', filePath);

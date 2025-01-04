@@ -95,7 +95,7 @@ class AdminController {
         try {
             const userId = req.params.id;
 
-            // Get current lock status
+            // Trạng thái lock hiện tại
             const [users] = await connection.promise().execute(
                 "SELECT locked FROM users WHERE id = ?",
                 [userId]
@@ -105,12 +105,12 @@ class AdminController {
                 return res.status(404).json({ message: 'User not found' });
             }
 
-            // Prevent self-locking
+            // Chặn tự Lock
             if (users[0].id === req.session.userId) {
                 return res.status(400).json({ message: 'Cannot lock your own account' });
             }
 
-            // Toggle lock status
+            // Chuyển đổi trạng thái
             const newLockStatus = users[0].locked ? 0 : 1;
             await connection.promise().execute(
                 "UPDATE users SET locked = ? WHERE id = ?",

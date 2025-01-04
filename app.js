@@ -41,7 +41,7 @@ app.get('/download', authMiddleware.requireLogin, (req, res) => {
     res.redirect('/files/download');
 });
 
-// Basic routes
+// Routes cơ bản
 app.get('/', (req, res) => res.render('home'));
 app.get('/admin', authMiddleware.requireLogin, (req, res) => res.render('admin'));
 app.get('/upload', authMiddleware.requireLogin, (req, res) => res.render('index'));
@@ -50,15 +50,15 @@ app.get('/feature', (req, res) => res.render('features'));
 app.get('/help', (req, res) => res.render('contact'));
 app.get('/sent-files', authMiddleware.requireLogin, fileController.getSentFiles);
 
-// Contact form submission
+// Gửi mẫu liên hệ
 app.post('/help', contactController.submitHelp);
 
-// Update the upload route to use the file routes
+// Cập nhật routes tải lên
 app.post('/upload', (req, res) => {
-    res.redirect(307, '/files/upload'); // 307 preserves the POST method
+    res.redirect(307, '/files/upload'); 
 });
 
-// WebSocket handling
+// WebSocket 
 io.on('connection', (socket) => {
     console.log('A user connected');
 
@@ -95,7 +95,7 @@ io.on('connection', (socket) => {
     });
 });
 
-// Thay đổi app.listen thành server.listen
+// Chạy chương trình
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);

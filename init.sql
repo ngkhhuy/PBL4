@@ -40,6 +40,3 @@ CREATE TABLE IF NOT EXISTS messages (
     FOREIGN KEY (receiver_id) REFERENCES users(id)
 );
 
--- Tạo tài khoản admin mặc định (password: admin123)
-INSERT INTO users (username, email, password, role) VALUES 
-('admin', 'admin@example.com', '$2b$10$rE5VhPv0QKkG7yxF8HzOh.ZQ3B4CNZGrdGGC0dkqR8GxGWtKGl9Aq', 'admin');

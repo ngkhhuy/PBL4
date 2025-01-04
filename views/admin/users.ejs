@@ -263,7 +263,7 @@
                 });
 
                 if (response.ok) {
-                    // Update display values
+                   
                     row.querySelectorAll('.display-value')[0].textContent = username;
                     row.querySelectorAll('.display-value')[1].textContent = email;
                     row.querySelectorAll('.display-value')[2].textContent = role;
@@ -287,7 +287,7 @@
                 });
 
                 if (response.ok) {
-                    location.reload(); // Refresh to show updated status
+                    location.reload(); 
                 } else {
                     alert('Failed to toggle lock status');
                 }

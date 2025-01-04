@@ -4,6 +4,7 @@ const connection = require('../config/database');
 const emailService = require('../services/emailService');
 
 class AuthController {
+    // Phương thức đăng ký tài khoản
     async register(req, res) {
         const { username, email, password } = req.body;
         try {
@@ -29,7 +30,7 @@ class AuthController {
             res.status(500).send("Registration failed");
         }
     }
-
+    // Phương thức đăng nhập
     async login(req, res) {
         const { username, password } = req.body;
         try {
@@ -46,7 +47,7 @@ class AuthController {
 
             const user = rows[0];
             
-            // Add check for locked account
+            // Kiểm tra trạng thái lock
             if (user.locked === 1) {
                 return res.render('login', {
                     error: "Your account has been locked. Please contact the administrator."
@@ -61,12 +62,12 @@ class AuthController {
                 });
             }
 
-            // Set session data
+            // Lưu phiên làm việc
             req.session.userId = user.id;
             req.session.username = user.username;
             req.session.isAdmin = user.is_admin || false;
 
-            // Redirect to upload page
+            
             return res.redirect('/upload');
         } catch (error) {
             console.error("Login error:", error);
@@ -75,7 +76,7 @@ class AuthController {
             });
         }
     }
-
+    
     async forgotPassword(req, res) {
         const { email } = req.body;
         try {

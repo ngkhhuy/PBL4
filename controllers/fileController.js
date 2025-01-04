@@ -14,14 +14,14 @@ class FileController {
             const { to, from, subject } = req.body;
             const file = req.file;
 
-            // First check if the recipient exists in the users table
+            // Kiểm tra người nhận có tồn tại không
             const [users] = await connection.promise().execute(
                 "SELECT username FROM users WHERE email = ?",
                 [to]
             );
 
             if (users.length === 0) {
-                // Delete the uploaded file since we can't process it
+                // Xoá upload file nếu  hệ thống lỗi không xử lý tiếp được
                 fs.unlink(file.path, (err) => {
                     if (err) console.error("Error deleting file:", err);
                 });
@@ -36,13 +36,13 @@ class FileController {
 
             const recipientUsername = users[0].username;
 
-            // Save file information to database using the username instead of email
+            // Lưu thông tin file vào DB
             const [result] = await connection.promise().execute(
                 "INSERT INTO files (name, path, uploaded_by, received_by) VALUES (?, ?, ?, ?)",
                 [file.originalname, `D:/FTP/${file.originalname}`, req.session.username, recipientUsername]
             );
 
-            // Send email notification
+            // Gửi thông báo qua mail
             try {
                 await emailService.sendMail(
                     to,
@@ -52,7 +52,7 @@ class FileController {
                 );
             } catch (emailError) {
                 console.error("Email notification failed:", emailError);
-                // Continue even if email fails
+               
             }
 
             res.send(`
@@ -62,7 +62,6 @@ class FileController {
                 </script>
             `);
         } catch (error) {
-            // If there was an error, try to delete the uploaded file
             if (req.file) {
                 fs.unlink(req.file.path, (err) => {
                     if (err) console.error("Error deleting file:", err);
@@ -96,7 +95,7 @@ class FileController {
         }
     }
 
-    // Show download page with list of files
+   
     async showDownloadPage(req, res) {
         try {
             const [files] = await connection.promise().execute(
@@ -114,7 +113,7 @@ class FileController {
         }
     }
 
-    // Handle file download
+
     async downloadFile(req, res) {
         try {
             const fileId = req.params.fileId;
@@ -129,45 +128,44 @@ class FileController {
 
             const file = files[0];
             
-            // Check if user has permission to download
+            // Kiểm tra người dùng có quyền download không
             if (file.received_by !== req.session.username && file.uploaded_by !== req.session.username) {
                 return res.status(403).send("Access denied");
             }
 
             try {
-                // Extract just the filename from the full path
+               
                 const fileName = path.basename(file.path);
                 
-                // Create a temporary directory if it doesn't exist
+                // Tạo một đường dẫn tạm hỗ trợ tải
                 const tempDir = path.join(__dirname, '..', 'temp');
                 if (!fs.existsSync(tempDir)) {
                     fs.mkdirSync(tempDir, { recursive: true });
                 }
 
-                // Local path for temporary file
+                
                 const tempFilePath = path.join(tempDir, fileName);
 
-                // Check if the file exists locally first
+                // Kiểm tra file đã tồn tại ở local chưa
                 if (fs.existsSync(file.path)) {
-                    // If file exists locally, stream it directly
                     const fileStream = fs.createReadStream(file.path);
                     res.setHeader('Content-Disposition', `attachment; filename="${fileName}"`);
                     res.setHeader('Content-Type', 'application/octet-stream');
                     return fileStream.pipe(res);
                 }
 
-                // If not local, try FTP download
-                await ftpService.downloadFile(fileName, tempFilePath); // Just use filename for FTP
+               
+                await ftpService.downloadFile(fileName, tempFilePath); 
 
-                // Set headers for download
+                // Thiết lập header cho việc download
                 res.setHeader('Content-Disposition', `attachment; filename="${fileName}"`);
                 res.setHeader('Content-Type', 'application/octet-stream');
 
-                // Stream the file and delete it after sending
+               
                 const fileStream = fs.createReadStream(tempFilePath);
                 fileStream.pipe(res);
                 
-                // Clean up temp file after sending
+                // Dọn file tạm sau khi gửi
                 fileStream.on('end', () => {
                     fs.unlink(tempFilePath, (err) => {
                         if (err) console.error('Error deleting temp file:', err);
@@ -184,7 +182,6 @@ class FileController {
         }
     }
 
-    // Add other file methods (download, list, etc.)
 }
 
 module.exports = new FileController(); 
