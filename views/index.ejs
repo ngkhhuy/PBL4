@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/1037/1037316.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
     <style>
         body {
@@ -210,6 +211,24 @@
                 transform: translateY(0);
             }
         }
+
+        .nav-link {
+            text-decoration: none;
+            padding: 10px 15px;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .nav-link:hover {
+            background-color: #f0f0f0;
+        }
+
+        .fa-comments {
+            font-size: 18px;
+            color: #007bff;
+        }
     </style>
 </head>
 <body>
@@ -220,6 +239,9 @@
             <a href="/feature">Features</a>
             <a href="/sent-files">File manager</a>
             <a href="/help">Help</a>
+            <a href="/chat" class="nav-link">
+                <i class="fas fa-comments"></i> Chat
+            </a>
         </nav>
         <div class="auth-buttons">
             <a href="#">More Options</a> <!-- Thay nút Download bằng nút này -->

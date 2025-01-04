@@ -28,6 +28,18 @@ CREATE TABLE IF NOT EXISTS files (
     FOREIGN KEY (received_by) REFERENCES users(username)
 );
 
+-- Tạo bảng messages
+CREATE TABLE IF NOT EXISTS messages (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    sender_id INT NOT NULL,
+    receiver_id INT NOT NULL,
+    content TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    is_read BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (sender_id) REFERENCES users(id),
+    FOREIGN KEY (receiver_id) REFERENCES users(id)
+);
+
 -- Tạo tài khoản admin mặc định (password: admin123)
 INSERT INTO users (username, email, password, role) VALUES 
 ('admin', 'admin@example.com', '$2b$10$rE5VhPv0QKkG7yxF8HzOh.ZQ3B4CNZGrdGGC0dkqR8GxGWtKGl9Aq', 'admin');

@@ -4,13 +4,19 @@ const path = require('path');
 const authMiddleware = require('./middleware/auth');
 const fileController = require('./controllers/fileController');
 const contactController = require('./controllers/contactController');
+const http = require('http');
+const socketIo = require('socket.io');
+const connection = require('./config/database');
 
 // Routes
 const authRoutes = require('./routes/auth');
 const fileRoutes = require('./routes/files');
 const adminRoutes = require('./routes/admin');
+const chatRoutes = require('./routes/chat');
 
 const app = express();
+const server = http.createServer(app);
+const io = socketIo(server);
 
 // Middleware
 app.use(express.json());
@@ -30,6 +36,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.use('/', authRoutes);
 app.use('/files', fileRoutes);
 app.use('/admin', adminRoutes);
+app.use('/chat', chatRoutes);
 app.get('/download', authMiddleware.requireLogin, (req, res) => {
     res.redirect('/files/download');
 });
@@ -51,7 +58,45 @@ app.post('/upload', (req, res) => {
     res.redirect(307, '/files/upload'); // 307 preserves the POST method
 });
 
+// WebSocket handling
+io.on('connection', (socket) => {
+    console.log('A user connected');
+
+    socket.on('authenticate', (userId) => {
+        console.log('User authenticated:', userId);
+        socket.userId = userId;
+    });
+
+    socket.on('private_message', async (data) => {
+        try {
+            const { senderId, receiverId, message } = data;
+            
+            // Lưu tin nhắn vào database
+            await connection.promise().execute(
+                "INSERT INTO messages (sender_id, receiver_id, content, is_read) VALUES (?, ?, ?, FALSE)",
+                [senderId, receiverId, message]
+            );
+
+            // Gửi tin nhắn đến người nhận
+            io.sockets.emit('new_message', {
+                senderId,
+                receiverId,
+                message,
+                timestamp: new Date()
+            });
+
+        } catch (error) {
+            console.error('Error handling message:', error);
+        }
+    });
+
+    socket.on('disconnect', () => {
+        console.log('User disconnected');
+    });
+});
+
+// Thay đổi app.listen thành server.listen
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
+server.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
