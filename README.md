@@ -23,22 +23,6 @@ A web application built with Node.js and Express that allows users to transfer f
 - **Email**: Nodemailer
 - **Security**: bcrypt for password hashing
 
-## Project Structure
-
-```
-├── admin/           # Admin-related views and functionality
-├── config/          # Configuration files
-├── controllers/     # Business logic controllers
-├── downloads/       # Downloaded files storage
-├── middleware/      # Custom middleware
-├── routes/          # Route definitions
-├── services/        # Service layer
-├── views/           # EJS templates
-├── .env            # Environment variables
-├── app.js          # Main application file
-├── init.sql        # Database initialization script
-└── package.json    # Project dependencies
-```
 
 ## Installation
 
@@ -69,20 +53,9 @@ A web application built with Node.js and Express that allows users to transfer f
 - Chat with other users in real-time
 - Access admin features if you have admin privileges
 
-## Dependencies
 
-- express: ^4.21.2
-- express-session: ^1.18.1
-- ejs: ^3.1.10
-- mysql2: ^3.11.4
-- socket.io: ^4.8.1
-- multer: ^1.4.5-lts.1
-- bcrypt: ^5.1.1
-- nodemailer: ^6.9.16
-- basic-ftp: ^5.0.5
-- ssh2-sftp-client: ^11.0.0
 
 ## License
 
-ISC 
+Author : khanhhuy.dev
 
