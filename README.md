@@ -33,11 +33,16 @@ A web application built with Node.js and Express that allows users to transfer f
    ```
 3. Create a `.env` file with the following variables:
    ```
-   PORT=3000
-   DB_HOST=your_database_host
-   DB_USER=your_database_user
-   DB_PASSWORD=your_database_password
-   DB_NAME=your_database_name
+   PORT=
+   DB_HOST=
+   DB_USER=
+   DB_PASSWORD=
+   DB_NAME=
+   EMAIL_USER=
+   EMAIL_PASS=
+   FTP_HOST=
+   FTP_USER=
+   FTP_PASS=
    ```
 4. Initialize the database using `init.sql`
 5. Start the server:
